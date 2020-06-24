@@ -55,7 +55,6 @@ public class SQL_AppUI extends javax.swing.JFrame {
         user.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         user.setText("User:");
 
-        user_name.setText("root");
         user_name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 user_nameActionPerformed(evt);
@@ -90,8 +89,6 @@ public class SQL_AppUI extends javax.swing.JFrame {
         choose_db.setBackground(new java.awt.Color(0, 255, 0));
         choose_db.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Select>" }));
         choose_db.setEnabled(false);
-
-        password.setText("Donut@123#");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,8 +205,8 @@ public class SQL_AppUI extends javax.swing.JFrame {
         }
         else
         {
-            this.flag_connect.setText("Incorrect username or password");
-            this.flag_connect.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Incorrect username or password!!");
+            return ;
         }
     }//GEN-LAST:event_btn_connectActionPerformed
 

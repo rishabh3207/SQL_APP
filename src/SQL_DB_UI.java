@@ -2,6 +2,7 @@
 import com.mysql.jdbc.Connection;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -42,7 +43,6 @@ public class SQL_DB_UI extends javax.swing.JFrame {
         buttonGroup3 = new javax.swing.ButtonGroup();
         buttonGroup4 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        show_tables = new javax.swing.JButton();
         label1 = new java.awt.Label();
         jScrollPane1 = new javax.swing.JScrollPane();
         output = new javax.swing.JTextArea();
@@ -53,9 +53,9 @@ public class SQL_DB_UI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btn_display = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        tb_name = new javax.swing.JTextField();
-        button_ok = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        choose_table = new javax.swing.JComboBox<>();
+        btn_start = new javax.swing.JButton();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -68,20 +68,16 @@ public class SQL_DB_UI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
         jLabel1.setText("SQL Application");
-
-        show_tables.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        show_tables.setText("Show Tables");
-        show_tables.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                show_tablesActionPerformed(evt);
-            }
-        });
+        jLabel1.setEnabled(false);
 
         label1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         label1.setText("OUTPUT : ");
+        label1.setVisible(false);
 
+        output.setEditable(false);
         output.setColumns(20);
         output.setRows(5);
+        output.setEnabled(false);
         jScrollPane1.setViewportView(output);
 
         btn_back.setText("<= Back");
@@ -95,12 +91,15 @@ public class SQL_DB_UI extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 200));
         jLabel2.setText("Query : ");
+        jLabel2.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 0, 0));
         jLabel3.setText("SELECT");
+        jLabel3.setEnabled(false);
 
         btn_col.setText("*");
+        btn_col.setEnabled(false);
         btn_col.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_colActionPerformed(evt);
@@ -109,102 +108,108 @@ public class SQL_DB_UI extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("FROM");
+        jLabel4.setEnabled(false);
 
         btn_display.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btn_display.setForeground(new java.awt.Color(200, 25, 0));
         btn_display.setText("Display");
+        btn_display.setEnabled(false);
         btn_display.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_displayActionPerformed(evt);
             }
         });
 
-        jLabel5.setText("Enter Table");
-
-        button_ok.setText("ok");
-        button_ok.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_okActionPerformed(evt);
-            }
-        });
+        jLabel5.setText("Select Table");
+        jLabel5.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 0, 0));
         jLabel6.setText("Table_Name");
+        jLabel6.setEnabled(false);
+
+        choose_table.setEnabled(false);
+        choose_table.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                choose_tableActionPerformed(evt);
+            }
+        });
+
+        btn_start.setText("Start");
+        btn_start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_startActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btn_back)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(165, 165, 165))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_display)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_col)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(show_tables)
-                            .addComponent(tb_name, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button_ok))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(128, 128, 128)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(choose_table, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btn_col)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(btn_display)))
+                                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_back)
+                        .addGap(191, 191, 191)
+                        .addComponent(btn_start)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_back)
-                    .addComponent(jLabel1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_start, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_back))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_display))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(btn_col)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel6))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tb_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(button_ok)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(show_tables)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
+                        .addComponent(choose_table, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(btn_col)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btn_display)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -214,7 +219,8 @@ public class SQL_DB_UI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void show_tablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_show_tablesActionPerformed
+    private  void all_tables()
+    {
         try
         {
             String url = "jdbc:mysql://localhost:3306/" + db_name;
@@ -223,12 +229,20 @@ public class SQL_DB_UI extends javax.swing.JFrame {
             ResultSet myres = myst.executeQuery();
             //System.out.println("ID\tNAME\t\tADDRESS");
             String res = "";
+            ArrayList<String> table_lists = new ArrayList<>();
             while(myres.next())
             {
                 System.out.println(myres.getString(1) + "\t");
                 res = res + myres.getString(1) + "\n";
+                table_lists.add(myres.getString(1));
             }
-            this.output.setText(res);
+            this.choose_table.removeAllItems();
+            this.choose_table.addItem("<Select>");
+            for(int i = 0; i < table_lists.size(); i++)
+            {
+                this.choose_table.addItem(table_lists.get(i));
+            }
+            //this.output.setText(res);
             this.output.setEditable(false);
             myConnection.close();
         }
@@ -236,8 +250,7 @@ public class SQL_DB_UI extends javax.swing.JFrame {
 	{
             ex.printStackTrace();
 	}
-    }//GEN-LAST:event_show_tablesActionPerformed
-
+    }
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
         SQL_AppUI sqlApp = new SQL_AppUI();
         sqlApp.setVisible(true);
@@ -247,6 +260,16 @@ public class SQL_DB_UI extends javax.swing.JFrame {
     private void btn_colActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_colActionPerformed
         try
         {
+            if(this.choose_table.getSelectedIndex() > 0)
+            {
+                table_name = this.choose_table.getSelectedItem().toString();
+                this.jLabel6.setText(table_name);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Select one table!!");
+                return ;
+            }
             String url = "jdbc:mysql://localhost:3306/" + db_name;
 	    java.sql.Connection myConnection= DriverManager.getConnection(url,"root","Donut@123#");
             PreparedStatement myst = myConnection.prepareStatement("SELECT * FROM " + table_name);
@@ -267,6 +290,7 @@ public class SQL_DB_UI extends javax.swing.JFrame {
             }
             obj = new JcheckBoxList(columnNames);
             obj.setVisible(true);
+            this.btn_display.setEnabled(true);
             myConnection.close();
         }
         catch(Exception ex)
@@ -283,7 +307,7 @@ public class SQL_DB_UI extends javax.swing.JFrame {
 	    java.sql.Connection myConnection= DriverManager.getConnection(url,"root","Donut@123#");
             String query = "";
             String printst = "";
-           
+            this.output.setEnabled(true);
             
             int sz=0;
             if(selectedCol.get(0) == 0 || selectedCol.size() == 0)
@@ -335,10 +359,24 @@ public class SQL_DB_UI extends javax.swing.JFrame {
 	}
     }//GEN-LAST:event_btn_displayActionPerformed
 
-    private void button_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_okActionPerformed
-        table_name = this.tb_name.getText();
-        this.jLabel6.setText(table_name);
-    }//GEN-LAST:event_button_okActionPerformed
+    private void btn_startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_startActionPerformed
+        // TODO add your handling code here:
+        all_tables();
+        this.btn_start.setEnabled(false);
+        this.jLabel1.setEnabled(true);
+        this.jLabel5.setEnabled(true);
+        this.choose_table.setEnabled(true);
+        this.jLabel2.setEnabled(true);
+        this.jLabel3.setEnabled(true);
+        this.jLabel4.setEnabled(true);
+        this.jLabel6.setEnabled(true);
+        this.btn_col.setEnabled(true);
+    }//GEN-LAST:event_btn_startActionPerformed
+
+    private void choose_tableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_choose_tableActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_choose_tableActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,11 +419,12 @@ public class SQL_DB_UI extends javax.swing.JFrame {
     private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_col;
     private javax.swing.JButton btn_display;
+    private javax.swing.JButton btn_start;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
-    private javax.swing.JButton button_ok;
+    private javax.swing.JComboBox<String> choose_table;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -398,8 +437,6 @@ public class SQL_DB_UI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
     private javax.swing.JTextArea output;
-    private javax.swing.JButton show_tables;
-    private javax.swing.JTextField tb_name;
     // End of variables declaration//GEN-END:variables
 
 }
